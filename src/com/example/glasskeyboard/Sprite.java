@@ -35,14 +35,11 @@ public class Sprite {
 	}
 
 	protected void velocity(float gyroX, float gyroY) {
-		// TODO Make the gyroscope connect to the cursor
-		// TODO Make a certain command restore the cursor to position zero.
 		xSpeed = (int) gyroX;
 		ySpeed = (int) gyroY;
 	}
 	
 	protected void update() {
-		// TODO Make the gyroscope connect to the cursor
 		// TODO Make a certain command restore the cursor to position zero.
 		x += xSpeed;
 		y += ySpeed;
