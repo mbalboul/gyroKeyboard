@@ -31,6 +31,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -265,7 +266,9 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 			
 			Paint paint = new Paint();
 			paint.setColor(Color.WHITE);
-			paint.setTextSize(50);
+			paint.setTextSize(64);
+			Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+			paint.setTypeface(robotoLight);
 			c.drawText(textField, 314, 676, paint);
 		}
 		
