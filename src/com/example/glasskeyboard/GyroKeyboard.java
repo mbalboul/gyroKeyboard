@@ -162,14 +162,19 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
     	if (i < 36)
 		{
     		if (!whichDict)
-    		{textField = textField + dict1.get(i);}
+    			{
+    			if (lowercase)
+    			{textField = textField + dict1.get(i).toLowerCase();}
+    			if (!lowercase)
+    			{textField = textField + dict1.get(i);}
+    			}
     		if (whichDict)
-    		{textField = textField + dict2.get(i);}
+    		{textField = textField + dict2.get(i).toLowerCase();}
 		}
     	if (i == 36)
     	{whichDict = !whichDict;}
-    	//if (i == 37) TODO capitalization/lowercase
-    	//{whichDict = !whichDict;}
+    	if (i == 37)
+    	{lowercase = !lowercase;}
     	if (i == 38)
     	{if (textField.length() > 0)
     	{textField = textField.substring(0, textField.length()-1);}}
@@ -217,42 +222,42 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		dict1.put(34, "8");
 		dict1.put(35, "9");
 		
-		dict2.put(0, "a");
-		dict2.put(1, "b");
-		dict2.put(2, "c");
-		dict2.put(3, "d");
-		dict2.put(4, "e");
-		dict2.put(5, "f");
-		dict2.put(6, "g");
-		dict2.put(7, "h");
-		dict2.put(8, "i");
-		dict2.put(9, "j");
-		dict2.put(10, "k");
-		dict2.put(11, "l");
-		dict2.put(12, "m");
-		dict2.put(13, "n");
-		dict2.put(14, "o");
-		dict2.put(15, "p");
-		dict2.put(16, "q");
-		dict2.put(17, "r");
-		dict2.put(18, "s");
-		dict2.put(19, "t");
-		dict2.put(20, "u");
-		dict2.put(21, "v");
-		dict2.put(22, "w");
-		dict2.put(23, "x");
-		dict2.put(24, "y");
-		dict2.put(25, "z");
-		dict2.put(26, ")");
-		dict2.put(27, "!");
-		dict2.put(28, "@");
-		dict2.put(29, "#");
-		dict2.put(30, "$");
-		dict2.put(31, "%");
-		dict2.put(32, "^");
-		dict2.put(33, "&");
-		dict2.put(34, "*");
-		dict2.put(35, "(");
+		dict2.put(0, "~");
+		dict2.put(1, "!");
+		dict2.put(2, "@");
+		dict2.put(3, "#");
+		dict2.put(4, "$");
+		dict2.put(5, "%");
+		dict2.put(6, "^");
+		dict2.put(7, "&");
+		dict2.put(8, "*");
+		dict2.put(9, "`");
+		dict2.put(10, "_");
+		dict2.put(11, "-");
+		dict2.put(12, "+");
+		dict2.put(13, "=");
+		dict2.put(14, "[");
+		dict2.put(15, "[");
+		dict2.put(16, "{");
+		dict2.put(17, "}");
+		dict2.put(18, "|");
+		dict2.put(19, "\\");
+		dict2.put(20, "/");
+		dict2.put(21, "\"");
+		dict2.put(22, "'");
+		dict2.put(23, ";");
+		dict2.put(24, ":");
+		dict2.put(25, "{");
+		dict2.put(26, "}");
+		dict2.put(27, "?");
+		dict2.put(28, " ");
+		dict2.put(29, " ");
+		dict2.put(30, " ");
+		dict2.put(31, " ");
+		dict2.put(32, ",");
+		dict2.put(33, ".");
+		dict2.put(34, "<");
+		dict2.put(35, ">");
 	}
 	
 	public class OurView extends SurfaceView implements Runnable {
@@ -324,37 +329,77 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 			Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
 			paint.setTypeface(robotoLight);
 			c.drawText(textField, 450, 676, paint);
-			// TODO, alternate letters depending on switch activation status
+			
+			// This giant wall of code is designed to imprint letters and stuff onto their keys.
+			if (whichDict) {c.drawText("ab", 52, 666, paint);}
+			if (!whichDict) {c.drawText("!?", 52, 666, paint);}
+			if (lowercase) {c.drawText("U", 188, 666, paint);}
+			if (!lowercase) {c.drawText("lo", 188, 666, paint);}
+			c.drawText("<-", 324, 666, paint);
 			if (!whichDict)
 			{
-			c.drawText("A", 50, 114, paint);
-			c.drawText("B", 188, 114, paint);
-			c.drawText("C", 326, 114, paint);
-			c.drawText("D", 464, 114, paint);
-			c.drawText("E", 602, 114, paint);
-			c.drawText("F", 740, 114, paint);
-			c.drawText("G", 878, 114, paint);
-			c.drawText("H", 1016, 114, paint);
-			c.drawText("I", 1154, 114, paint);
-			
-			c.drawText("J", 50, 242, paint);
-			c.drawText("K", 188, 242, paint);
-			c.drawText("L", 326, 242, paint);
-			c.drawText("M", 464, 242, paint);
-			c.drawText("N", 602, 242, paint);
-			c.drawText("O", 740, 242, paint);
-			c.drawText("P", 878, 242, paint);
-			c.drawText("Q", 1016, 242, paint);
-			c.drawText("R", 1154, 242, paint);
-			
-			c.drawText("S", 50, 370, paint);
-			c.drawText("T", 188, 370, paint);
-			c.drawText("U", 326, 370, paint);
-			c.drawText("V", 464, 370, paint);
-			c.drawText("W", 602, 370, paint);
-			c.drawText("X", 740, 370, paint);
-			c.drawText("Y", 878, 370, paint);
-			c.drawText("Z", 1016, 370, paint);
+				if (!lowercase)
+				{
+				c.drawText("A", 50, 114, paint);
+				c.drawText("B", 188, 114, paint);
+				c.drawText("C", 326, 114, paint);
+				c.drawText("D", 464, 114, paint);
+				c.drawText("E", 602, 114, paint);
+				c.drawText("F", 740, 114, paint);
+				c.drawText("G", 878, 114, paint);
+				c.drawText("H", 1016, 114, paint);
+				c.drawText("I", 1154, 114, paint);
+				
+				c.drawText("J", 50, 242, paint);
+				c.drawText("K", 188, 242, paint);
+				c.drawText("L", 326, 242, paint);
+				c.drawText("M", 464, 242, paint);
+				c.drawText("N", 602, 242, paint);
+				c.drawText("O", 740, 242, paint);
+				c.drawText("P", 878, 242, paint);
+				c.drawText("Q", 1016, 242, paint);
+				c.drawText("R", 1154, 242, paint);
+				
+				c.drawText("S", 50, 370, paint);
+				c.drawText("T", 188, 370, paint);
+				c.drawText("U", 326, 370, paint);
+				c.drawText("V", 464, 370, paint);
+				c.drawText("W", 602, 370, paint);
+				c.drawText("X", 740, 370, paint);
+				c.drawText("Y", 878, 370, paint);
+				c.drawText("Z", 1016, 370, paint);
+				}
+				if (lowercase)
+				{
+				c.drawText("a", 50, 114, paint);
+				c.drawText("b", 188, 114, paint);
+				c.drawText("c", 326, 114, paint);
+				c.drawText("d", 464, 114, paint);
+				c.drawText("e", 602, 114, paint);
+				c.drawText("f", 740, 114, paint);
+				c.drawText("g", 878, 114, paint);
+				c.drawText("h", 1016, 114, paint);
+				c.drawText("i", 1154, 114, paint);
+				
+				c.drawText("j", 50, 242, paint);
+				c.drawText("k", 188, 242, paint);
+				c.drawText("l", 326, 242, paint);
+				c.drawText("m", 464, 242, paint);
+				c.drawText("n", 602, 242, paint);
+				c.drawText("o", 740, 242, paint);
+				c.drawText("p", 878, 242, paint);
+				c.drawText("q", 1016, 242, paint);
+				c.drawText("r", 1154, 242, paint);
+				
+				c.drawText("s", 50, 370, paint);
+				c.drawText("t", 188, 370, paint);
+				c.drawText("u", 326, 370, paint);
+				c.drawText("v", 464, 370, paint);
+				c.drawText("w", 602, 370, paint);
+				c.drawText("x", 740, 370, paint);
+				c.drawText("y", 878, 370, paint);
+				c.drawText("z", 1016, 370, paint);
+				}
 			c.drawText("0", 1154, 370, paint);
 			
 			c.drawText("1", 50, 498, paint);
@@ -366,6 +411,48 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 			c.drawText("7", 878, 498, paint);
 			c.drawText("8", 1016, 498, paint);
 			c.drawText("9", 1154, 498, paint);
+			}
+			if (whichDict)
+			{
+				c.drawText("~", 50, 114, paint);
+				c.drawText("!", 188, 114, paint);
+				c.drawText("@", 326, 114, paint);
+				c.drawText("#", 464, 114, paint);
+				c.drawText("$", 602, 114, paint);
+				c.drawText("%", 740, 114, paint);
+				c.drawText("^", 878, 114, paint);
+				c.drawText("&", 1016, 114, paint);
+				c.drawText("*", 1154, 114, paint);
+				
+				c.drawText("`", 50, 242, paint);
+				c.drawText("_", 188, 242, paint);
+				c.drawText("-", 326, 242, paint);
+				c.drawText("+", 464, 242, paint);
+				c.drawText("=", 602, 242, paint);
+				c.drawText("[", 740, 242, paint);
+				c.drawText("]", 878, 242, paint);
+				c.drawText("(", 1016, 242, paint);
+				c.drawText(")", 1154, 242, paint);
+				
+				c.drawText("|", 50, 370, paint);
+				c.drawText("\\", 188, 370, paint);
+				c.drawText("/", 326, 370, paint);
+				c.drawText("\"", 464, 370, paint);
+				c.drawText("'", 602, 370, paint);
+				c.drawText(";", 740, 370, paint);
+				c.drawText(":", 878, 370, paint);
+				c.drawText("{", 1016, 370, paint);
+				c.drawText("}", 1154, 370, paint);
+				
+				c.drawText("?", 50, 498, paint);
+				c.drawText(" ", 188, 498, paint);
+				c.drawText(" ", 326, 498, paint);
+				c.drawText(" ", 464, 498, paint);
+				c.drawText(" ", 602, 498, paint);
+				c.drawText(",", 740, 498, paint);
+				c.drawText(".", 878, 498, paint);
+				c.drawText("<", 1016, 498, paint);
+				c.drawText(">", 1154, 498, paint);
 			}
 		}
 		
