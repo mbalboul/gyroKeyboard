@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,7 +47,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	private Keyboard keys;
 	private SparseArray<String> dict1 = new SparseArray<String>(36);
 	private SparseArray<String> dict2 = new SparseArray<String>(36);
-	boolean whichDict = false;
+	boolean whichDict = false, lowercase = false;
 	int xcenter, ycenter;
 	private SensorManager mSensorManager;
 	private Sensor gyroSensor;
@@ -114,22 +115,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	@Override
 	public boolean onTouch (View v, MotionEvent me) //This method exists solely for phone testing
 	{
-    	if (keys.checkOverlap(cursor) < 36)
-		{
-    		if (!whichDict)
-    		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
-    		if (whichDict)
-    		{textField = textField + dict2.get(keys.checkOverlap(cursor));}
-		}
-    	if (keys.checkOverlap(cursor) == 36)
-    	{whichDict = !whichDict;}
-    	//if (keys.checkOverlap(cursor) == 37) TODO capitalization/lowercase
-    	//{whichDict = !whichDict;}
-    	if (keys.checkOverlap(cursor) == 38)
-    	{if (textField.length() > 0)
-    	{textField = textField.substring(0, textField.length()-1);}}
-    	//if (keys.checkOverlap(cursor) == 39)
-    	//{whichDict = !whichDict;}
+		keyParse(keys.checkOverlap(cursor));
     	return false;
 	}
 	
@@ -137,13 +123,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	public boolean onKeyDown(int keyCode, KeyEvent event) //This method, however, is for Glass.
 	{
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-        	if (keys.checkOverlap(cursor) < 36)
-    		{
-        		if (!whichDict)
-        		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
-        		if (whichDict)
-        		{textField = textField + dict2.get(keys.checkOverlap(cursor));}
-    		}
+        	keyParse(keys.checkOverlap(cursor));
         	return true;
         }
 
@@ -158,13 +138,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
                 @Override
                 public boolean onGesture(Gesture gesture) {
                     if (gesture == Gesture.TAP) {
-                    	if (keys.checkOverlap(cursor)< 36)
-                		{
-                    		if (!whichDict)
-                    		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
-                    		if (whichDict)
-                    		{textField = textField + dict2.get(keys.checkOverlap(cursor));}
-                		}
+                    	keyParse(keys.checkOverlap(cursor));
                         return true;
                         
                     } else if (gesture == Gesture.TWO_TAP) {
@@ -182,7 +156,27 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
             });
             return gestureDetector;
     }
-
+    
+	public void keyParse(int i)
+	{
+    	if (i < 36)
+		{
+    		if (!whichDict)
+    		{textField = textField + dict1.get(i);}
+    		if (whichDict)
+    		{textField = textField + dict2.get(i);}
+		}
+    	if (i == 36)
+    	{whichDict = !whichDict;}
+    	//if (i == 37) TODO capitalization/lowercase
+    	//{whichDict = !whichDict;}
+    	if (i == 38)
+    	{if (textField.length() > 0)
+    	{textField = textField.substring(0, textField.length()-1);}}
+    	//if (i == 39)
+    	//{whichDict = !whichDict;}
+    	Toast.makeText(this, textField, Toast.LENGTH_SHORT).show();
+	}
 	
 	private void writeDictionaries()
 	{
