@@ -336,6 +336,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 			if (lowercase) {c.drawText("U", 188, 666, paint);}
 			if (!lowercase) {c.drawText("lo", 188, 666, paint);}
 			c.drawText("<-", 324, 666, paint);
+			c.drawText("fin", 1152, 666, paint);
 			if (!whichDict)
 			{
 				if (!lowercase)
@@ -499,10 +500,11 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 			keys.keys[34] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 414);
 			keys.keys[35] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 414);
 			
-			//These final three keys are for special options.
-			//Key 36 switches dicts.
-			//Key 37 ...?
-			//Key 38 accepts the input.
+			//These final four keys are for special options.
+			//Key 36 switches from letters/numbers to symbols.
+			//Key 37 modifies capitalization.
+			//Key 38 is a backspace.
+			//Key 39 accepts the input.
 			keys.keys[36] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 42, 582);
 			keys.keys[37] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 582);
 			keys.keys[38] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 314, 582);
