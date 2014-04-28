@@ -44,11 +44,9 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	float x, y;
 	private Sprite cursor;
 	private Keyboard keys;
-	//private Sprite lbA, lbB, lbC, lbD, lbE, lbF, lbG, lbH, lbI, lbJ, lbK, lbL, lbM, lbN, lbO, lbP;
-	//private Sprite lbQ, lbR, lbS, lbT, lbU, lbV, lbW, lbX, lbY, lbZ, lb0, lb1, lb2, lb3, lb4, lb5;
-	//private Sprite lb6, lb7, lb8, lb9;
 	private SparseArray<String> dict1 = new SparseArray<String>(36);
-	private Map<Integer, String> dict2 = new HashMap<Integer, String>();
+	private SparseArray<String> dict2 = new SparseArray<String>(36);
+	boolean whichDict = false;
 	int xcenter, ycenter;
 	private SensorManager mSensorManager;
 	private Sensor gyroSensor;
@@ -116,18 +114,37 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	@Override
 	public boolean onTouch (View v, MotionEvent me) //This method exists solely for phone testing
 	{
-		if (keys.checkOverlap(cursor)!= -1)
-		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
-		return false;
+    	if (keys.checkOverlap(cursor) < 36)
+		{
+    		if (!whichDict)
+    		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
+    		if (whichDict)
+    		{textField = textField + dict2.get(keys.checkOverlap(cursor));}
+		}
+    	if (keys.checkOverlap(cursor) == 36)
+    	{whichDict = !whichDict;}
+    	//if (keys.checkOverlap(cursor) == 37) TODO capitalization/lowercase
+    	//{whichDict = !whichDict;}
+    	if (keys.checkOverlap(cursor) == 38)
+    	{if (textField.length() > 0)
+    	{textField = textField.substring(0, textField.length()-1);}}
+    	//if (keys.checkOverlap(cursor) == 39)
+    	//{whichDict = !whichDict;}
+    	return false;
 	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) //This method, however, is for Glass.
 	{
         if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-        	if (keys.checkOverlap(cursor)!= -1)
-    		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
-            return true;
+        	if (keys.checkOverlap(cursor) < 36)
+    		{
+        		if (!whichDict)
+        		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
+        		if (whichDict)
+        		{textField = textField + dict2.get(keys.checkOverlap(cursor));}
+    		}
+        	return true;
         }
 
 		super.onKeyDown(keyCode, event);
@@ -141,9 +158,15 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
                 @Override
                 public boolean onGesture(Gesture gesture) {
                     if (gesture == Gesture.TAP) {
-                    	if (keys.checkOverlap(cursor)!= -1)
-                		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
+                    	if (keys.checkOverlap(cursor)< 36)
+                		{
+                    		if (!whichDict)
+                    		{textField = textField + dict1.get(keys.checkOverlap(cursor));}
+                    		if (whichDict)
+                    		{textField = textField + dict2.get(keys.checkOverlap(cursor));}
+                		}
                         return true;
+                        
                     } else if (gesture == Gesture.TWO_TAP) {
                     	cursor.resetPosition();
                         return true;
@@ -199,6 +222,43 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		dict1.put(33, "7");
 		dict1.put(34, "8");
 		dict1.put(35, "9");
+		
+		dict2.put(0, "a");
+		dict2.put(1, "b");
+		dict2.put(2, "c");
+		dict2.put(3, "d");
+		dict2.put(4, "e");
+		dict2.put(5, "f");
+		dict2.put(6, "g");
+		dict2.put(7, "h");
+		dict2.put(8, "i");
+		dict2.put(9, "j");
+		dict2.put(10, "k");
+		dict2.put(11, "l");
+		dict2.put(12, "m");
+		dict2.put(13, "n");
+		dict2.put(14, "o");
+		dict2.put(15, "p");
+		dict2.put(16, "q");
+		dict2.put(17, "r");
+		dict2.put(18, "s");
+		dict2.put(19, "t");
+		dict2.put(20, "u");
+		dict2.put(21, "v");
+		dict2.put(22, "w");
+		dict2.put(23, "x");
+		dict2.put(24, "y");
+		dict2.put(25, "z");
+		dict2.put(26, ")");
+		dict2.put(27, "!");
+		dict2.put(28, "@");
+		dict2.put(29, "#");
+		dict2.put(30, "$");
+		dict2.put(31, "%");
+		dict2.put(32, "^");
+		dict2.put(33, "&");
+		dict2.put(34, "*");
+		dict2.put(35, "(");
 	}
 	
 	public class OurView extends SurfaceView implements Runnable {
@@ -260,60 +320,112 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		protected void onDraw(Canvas c) {
 			c.drawARGB(255, 0, 0, 0);
 			//c.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.gyrokeyboard48), 0, 360, null);
-			c.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.bottombar), 0, 540, null);
+			c.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.bottombar2), 0, 540, null);
 			cursor.onDraw(c);
 			keys.onDraw(c);
 			
 			Paint paint = new Paint();
 			paint.setColor(Color.WHITE);
-			paint.setTextSize(64);
+			paint.setTextSize(72);
 			Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
 			paint.setTypeface(robotoLight);
-			c.drawText(textField, 314, 676, paint);
+			c.drawText(textField, 450, 676, paint);
+			// TODO, alternate letters depending on switch activation status
+			if (!whichDict)
+			{
+			c.drawText("A", 50, 114, paint);
+			c.drawText("B", 188, 114, paint);
+			c.drawText("C", 326, 114, paint);
+			c.drawText("D", 464, 114, paint);
+			c.drawText("E", 602, 114, paint);
+			c.drawText("F", 740, 114, paint);
+			c.drawText("G", 878, 114, paint);
+			c.drawText("H", 1016, 114, paint);
+			c.drawText("I", 1154, 114, paint);
+			
+			c.drawText("J", 50, 242, paint);
+			c.drawText("K", 188, 242, paint);
+			c.drawText("L", 326, 242, paint);
+			c.drawText("M", 464, 242, paint);
+			c.drawText("N", 602, 242, paint);
+			c.drawText("O", 740, 242, paint);
+			c.drawText("P", 878, 242, paint);
+			c.drawText("Q", 1016, 242, paint);
+			c.drawText("R", 1154, 242, paint);
+			
+			c.drawText("S", 50, 370, paint);
+			c.drawText("T", 188, 370, paint);
+			c.drawText("U", 326, 370, paint);
+			c.drawText("V", 464, 370, paint);
+			c.drawText("W", 602, 370, paint);
+			c.drawText("X", 740, 370, paint);
+			c.drawText("Y", 878, 370, paint);
+			c.drawText("Z", 1016, 370, paint);
+			c.drawText("0", 1154, 370, paint);
+			
+			c.drawText("1", 50, 498, paint);
+			c.drawText("2", 188, 498, paint);
+			c.drawText("3", 326, 498, paint);
+			c.drawText("4", 464, 498, paint);
+			c.drawText("5", 602, 498, paint);
+			c.drawText("6", 740, 498, paint);
+			c.drawText("7", 878, 498, paint);
+			c.drawText("8", 1016, 498, paint);
+			c.drawText("9", 1154, 498, paint);
+			}
 		}
 		
 		private void keyboardSprites()
 		{
 			keys = new Keyboard();
-			keys.keys[0] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 40, 30);
-			keys.keys[1] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 178, 30);
-			keys.keys[2] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 316, 30);
-			keys.keys[3] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 454, 30);
-			keys.keys[4] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 592, 30);
-			keys.keys[5] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 730, 30);
-			keys.keys[6] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 868, 30);
-			keys.keys[7] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1006, 30);
-			keys.keys[8] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1144, 30);
+			keys.keys[0] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 30);
+			keys.keys[1] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 30);
+			keys.keys[2] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 30);
+			keys.keys[3] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 30);
+			keys.keys[4] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 30);
+			keys.keys[5] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 30);
+			keys.keys[6] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 30);
+			keys.keys[7] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 30);
+			keys.keys[8] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 30);
 			
-			keys.keys[9] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 40, 158);
-			keys.keys[10] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 178, 158);
-			keys.keys[11] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 316, 158);
-			keys.keys[12] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 454, 158);
-			keys.keys[13] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 592, 158);
-			keys.keys[14] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 730, 158);
-			keys.keys[15] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 868, 158);
-			keys.keys[16] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1006, 158);
-			keys.keys[17] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1144, 158);
+			keys.keys[9] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 158);
+			keys.keys[10] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 158);
+			keys.keys[11] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 158);
+			keys.keys[12] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 158);
+			keys.keys[13] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 158);
+			keys.keys[14] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 158);
+			keys.keys[15] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 158);
+			keys.keys[16] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 158);
+			keys.keys[17] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 158);
 			
-			keys.keys[18] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 40, 286);
-			keys.keys[19] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 178, 286);
-			keys.keys[20] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 316, 286);
-			keys.keys[21] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 454, 286);
-			keys.keys[22] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 592, 286);
-			keys.keys[23] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 730, 286);
-			keys.keys[24] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 868, 286);
-			keys.keys[25] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1006, 286);
-			keys.keys[26] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1144, 286);
+			keys.keys[18] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 286);
+			keys.keys[19] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 286);
+			keys.keys[20] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 286);
+			keys.keys[21] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 286);
+			keys.keys[22] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 286);
+			keys.keys[23] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 286);
+			keys.keys[24] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 286);
+			keys.keys[25] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 286);
+			keys.keys[26] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 286);
 			
-			keys.keys[27] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 40, 414);
-			keys.keys[28] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 178, 414);
-			keys.keys[29] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 316, 414);
-			keys.keys[30] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 454, 414);
-			keys.keys[31] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 592, 414);
-			keys.keys[32] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 730, 414);
-			keys.keys[33] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 868, 414);
-			keys.keys[34] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1006, 414);
-			keys.keys[35] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterboxa), 1144, 414);
+			keys.keys[27] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 414);
+			keys.keys[28] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 414);
+			keys.keys[29] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 414);
+			keys.keys[30] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 414);
+			keys.keys[31] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 414);
+			keys.keys[32] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 414);
+			keys.keys[33] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 414);
+			keys.keys[34] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 414);
+			keys.keys[35] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 414);
+			
+			//These final three keys are for special options.
+			//Key 36 switches dicts.
+			//Key 37 ...?
+			//Key 38 accepts the input.
+			keys.keys[36] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 42, 582);
+			keys.keys[37] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 582);
+			keys.keys[38] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 314, 582);
+			keys.keys[39] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1142, 582);
 		}
 		
 	}

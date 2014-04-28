@@ -7,7 +7,7 @@ import android.content.res.Resources;
 
 public class Keyboard {
 
-	protected Sprite[] keys = new Sprite[36];
+	protected Sprite[] keys = new Sprite[40];
 	
 	public Keyboard()
 	{
@@ -30,7 +30,7 @@ public class Keyboard {
 			}
 			}
 		}
-		return -1;
+		return keys.length;
 	}
 	
 	@SuppressLint("WrongCall") // TODO check on this issue
