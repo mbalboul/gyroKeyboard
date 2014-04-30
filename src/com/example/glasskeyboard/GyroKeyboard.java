@@ -183,7 +183,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
     	{
     		//textField = "";
     		Intent resultData = new Intent();
-    		resultData.putExtra("text-field", textField);
+    		resultData.putExtra("string", textField);
     		setResult(Activity.RESULT_OK, resultData);
     		finish();
     	}
