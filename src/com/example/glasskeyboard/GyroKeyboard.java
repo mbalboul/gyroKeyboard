@@ -2,9 +2,6 @@ package com.example.glasskeyboard;
 
 //import most.firstapp.Sprite;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.example.glasskeyboard.GyroKeyboard.OurView;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
@@ -108,7 +105,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	{
 		if (cursor != null)
 		{
-			cursor.velocity(event.values[1]*50, event.values[0]*50);
+			cursor.velocity(event.values[1]*-150, event.values[0]*-150);
 		}
 	}
 	
@@ -144,6 +141,10 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
                     } else if (gesture == Gesture.TWO_TAP) {
                     	cursor.resetPosition();
                         return true;
+                    } else if (gesture == Gesture.THREE_TAP) {
+                    	{if (textField.length() > 0)
+                    	{textField = textField.substring(0, textField.length()-1);}}
+                        return true; 
                     } else if (gesture == Gesture.SWIPE_RIGHT) {
                         // do something on right (forward) swipe
                         return true;
@@ -319,196 +320,196 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		protected void onDraw(Canvas c) {
 			c.drawARGB(255, 0, 0, 0);
 			//c.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.gyrokeyboard48), 0, 360, null);
-			c.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.bottombar2), 0, 540, null);
+			c.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.bottombar2), 0, 540/2, null);
 			cursor.onDraw(c);
 			keys.onDraw(c);
 			
 			Paint paint = new Paint();
 			paint.setColor(Color.WHITE);
-			paint.setTextSize(72);
+			paint.setTextSize(36);
 			Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
 			paint.setTypeface(robotoLight);
-			c.drawText(textField, 450, 676, paint);
+			c.drawText(textField, 450/2, 676/2, paint);
 			
 			// This giant wall of code is designed to imprint letters and stuff onto their keys.
-			if (whichDict) {c.drawText("ab", 52, 666, paint);}
-			if (!whichDict) {c.drawText("!?", 52, 666, paint);}
-			if (lowercase) {c.drawText("U", 188, 666, paint);}
-			if (!lowercase) {c.drawText("lo", 188, 666, paint);}
-			c.drawText("<-", 324, 666, paint);
-			c.drawText("fin", 1152, 666, paint);
+			if (whichDict) {c.drawText("ab", 52/2, 666/2, paint);}
+			if (!whichDict) {c.drawText("!?", 52/2, 666/2, paint);}
+			if (lowercase) {c.drawText("U", 188/2, 666/2, paint);}
+			if (!lowercase) {c.drawText("lo", 188/2, 666/2, paint);}
+			c.drawText("<-", 324/2, 666/2, paint);
+			c.drawText("fin", 1152/2, 666/2, paint);
 			if (!whichDict)
 			{
 				if (!lowercase)
 				{
-				c.drawText("A", 50, 114, paint);
-				c.drawText("B", 188, 114, paint);
-				c.drawText("C", 326, 114, paint);
-				c.drawText("D", 464, 114, paint);
-				c.drawText("E", 602, 114, paint);
-				c.drawText("F", 740, 114, paint);
-				c.drawText("G", 878, 114, paint);
-				c.drawText("H", 1016, 114, paint);
-				c.drawText("I", 1154, 114, paint);
+				c.drawText("A", 50/2, 114/2, paint);
+				c.drawText("B", 188/2, 114/2, paint);
+				c.drawText("C", 326/2, 114/2, paint);
+				c.drawText("D", 464/2, 114/2, paint);
+				c.drawText("E", 602/2, 114/2, paint);
+				c.drawText("F", 740/2, 114/2, paint);
+				c.drawText("G", 878/2, 114/2, paint);
+				c.drawText("H", 1016/2, 114/2, paint);
+				c.drawText("I", 1154/2, 114/2, paint);
 				
-				c.drawText("J", 50, 242, paint);
-				c.drawText("K", 188, 242, paint);
-				c.drawText("L", 326, 242, paint);
-				c.drawText("M", 464, 242, paint);
-				c.drawText("N", 602, 242, paint);
-				c.drawText("O", 740, 242, paint);
-				c.drawText("P", 878, 242, paint);
-				c.drawText("Q", 1016, 242, paint);
-				c.drawText("R", 1154, 242, paint);
+				c.drawText("J", 50/2, 242/2, paint);
+				c.drawText("K", 188/2, 242/2, paint);
+				c.drawText("L", 326/2, 242/2, paint);
+				c.drawText("M", 464/2, 242/2, paint);
+				c.drawText("N", 602/2, 242/2, paint);
+				c.drawText("O", 740/2, 242/2, paint);
+				c.drawText("P", 878/2, 242/2, paint);
+				c.drawText("Q", 1016/2, 242/2, paint);
+				c.drawText("R", 1154/2, 242/2, paint);
 				
-				c.drawText("S", 50, 370, paint);
-				c.drawText("T", 188, 370, paint);
-				c.drawText("U", 326, 370, paint);
-				c.drawText("V", 464, 370, paint);
-				c.drawText("W", 602, 370, paint);
-				c.drawText("X", 740, 370, paint);
-				c.drawText("Y", 878, 370, paint);
-				c.drawText("Z", 1016, 370, paint);
+				c.drawText("S", 50/2, 370/2, paint);
+				c.drawText("T", 188/2, 370/2, paint);
+				c.drawText("U", 326/2, 370/2, paint);
+				c.drawText("V", 464/2, 370/2, paint);
+				c.drawText("W", 602/2, 370/2, paint);
+				c.drawText("X", 740/2, 370/2, paint);
+				c.drawText("Y", 878/2, 370/2, paint);
+				c.drawText("Z", 1016/2, 370/2, paint);
 				}
 				if (lowercase)
 				{
-				c.drawText("a", 50, 114, paint);
-				c.drawText("b", 188, 114, paint);
-				c.drawText("c", 326, 114, paint);
-				c.drawText("d", 464, 114, paint);
-				c.drawText("e", 602, 114, paint);
-				c.drawText("f", 740, 114, paint);
-				c.drawText("g", 878, 114, paint);
-				c.drawText("h", 1016, 114, paint);
-				c.drawText("i", 1154, 114, paint);
+				c.drawText("a", 50/2, 114/2, paint);
+				c.drawText("b", 188/2, 114/2, paint);
+				c.drawText("c", 326/2, 114/2, paint);
+				c.drawText("d", 464/2, 114/2, paint);
+				c.drawText("e", 602/2, 114/2, paint);
+				c.drawText("f", 740/2, 114/2, paint);
+				c.drawText("g", 878/2, 114/2, paint);
+				c.drawText("h", 1016/2, 114/2, paint);
+				c.drawText("i", 1154/2, 114/2, paint);
 				
-				c.drawText("j", 50, 242, paint);
-				c.drawText("k", 188, 242, paint);
-				c.drawText("l", 326, 242, paint);
-				c.drawText("m", 464, 242, paint);
-				c.drawText("n", 602, 242, paint);
-				c.drawText("o", 740, 242, paint);
-				c.drawText("p", 878, 242, paint);
-				c.drawText("q", 1016, 242, paint);
-				c.drawText("r", 1154, 242, paint);
+				c.drawText("j", 50/2, 242/2, paint);
+				c.drawText("k", 188/2, 242/2, paint);
+				c.drawText("l", 326/2, 242/2, paint);
+				c.drawText("m", 464/2, 242/2, paint);
+				c.drawText("n", 602/2, 242/2, paint);
+				c.drawText("o", 740/2, 242/2, paint);
+				c.drawText("p", 878/2, 242/2, paint);
+				c.drawText("q", 1016/2, 242/2, paint);
+				c.drawText("r", 1154/2, 242/2, paint);
 				
-				c.drawText("s", 50, 370, paint);
-				c.drawText("t", 188, 370, paint);
-				c.drawText("u", 326, 370, paint);
-				c.drawText("v", 464, 370, paint);
-				c.drawText("w", 602, 370, paint);
-				c.drawText("x", 740, 370, paint);
-				c.drawText("y", 878, 370, paint);
-				c.drawText("z", 1016, 370, paint);
+				c.drawText("s", 50/2, 370/2, paint);
+				c.drawText("t", 188/2, 370/2, paint);
+				c.drawText("u", 326/2, 370/2, paint);
+				c.drawText("v", 464/2, 370/2, paint);
+				c.drawText("w", 602/2, 370/2, paint);
+				c.drawText("x", 740/2, 370/2, paint);
+				c.drawText("y", 878/2, 370/2, paint);
+				c.drawText("z", 1016/2, 370/2, paint);
 				}
-			c.drawText("0", 1154, 370, paint);
+			c.drawText("0", 1154/2, 370/2, paint);
 			
-			c.drawText("1", 50, 498, paint);
-			c.drawText("2", 188, 498, paint);
-			c.drawText("3", 326, 498, paint);
-			c.drawText("4", 464, 498, paint);
-			c.drawText("5", 602, 498, paint);
-			c.drawText("6", 740, 498, paint);
-			c.drawText("7", 878, 498, paint);
-			c.drawText("8", 1016, 498, paint);
-			c.drawText("9", 1154, 498, paint);
+			c.drawText("1", 50/2, 498/2, paint);
+			c.drawText("2", 188/2, 498/2, paint);
+			c.drawText("3", 326/2, 498/2, paint);
+			c.drawText("4", 464/2, 498/2, paint);
+			c.drawText("5", 602/2, 498/2, paint);
+			c.drawText("6", 740/2, 498/2, paint);
+			c.drawText("7", 878/2, 498/2, paint);
+			c.drawText("8", 1016/2, 498/2, paint);
+			c.drawText("9", 1154/2, 498/2, paint);
 			}
 			if (whichDict)
 			{
-				c.drawText("~", 50, 114, paint);
-				c.drawText("!", 188, 114, paint);
-				c.drawText("@", 326, 114, paint);
-				c.drawText("#", 464, 114, paint);
-				c.drawText("$", 602, 114, paint);
-				c.drawText("%", 740, 114, paint);
-				c.drawText("^", 878, 114, paint);
-				c.drawText("&", 1016, 114, paint);
-				c.drawText("*", 1154, 114, paint);
+				c.drawText("~", 50/2, 114/2, paint);
+				c.drawText("!", 188/2, 114/2, paint);
+				c.drawText("@", 326/2, 114/2, paint);
+				c.drawText("#", 464/2, 114/2, paint);
+				c.drawText("$", 602/2, 114/2, paint);
+				c.drawText("%", 740/2, 114/2, paint);
+				c.drawText("^", 878/2, 114/2, paint);
+				c.drawText("&", 1016/2, 114/2, paint);
+				c.drawText("*", 1154/2, 114/2, paint);
 				
-				c.drawText("`", 50, 242, paint);
-				c.drawText("_", 188, 242, paint);
-				c.drawText("-", 326, 242, paint);
-				c.drawText("+", 464, 242, paint);
-				c.drawText("=", 602, 242, paint);
-				c.drawText("[", 740, 242, paint);
-				c.drawText("]", 878, 242, paint);
-				c.drawText("(", 1016, 242, paint);
-				c.drawText(")", 1154, 242, paint);
+				c.drawText("`", 50/2, 242/2, paint);
+				c.drawText("_", 188/2, 242/2, paint);
+				c.drawText("-", 326/2, 242/2, paint);
+				c.drawText("+", 464/2, 242/2, paint);
+				c.drawText("=", 602/2, 242/2, paint);
+				c.drawText("[", 740/2, 242/2, paint);
+				c.drawText("]", 878/2, 242/2, paint);
+				c.drawText("(", 1016/2, 242/2, paint);
+				c.drawText(")", 1154/2, 242/2, paint);
 				
-				c.drawText("|", 50, 370, paint);
-				c.drawText("\\", 188, 370, paint);
-				c.drawText("/", 326, 370, paint);
-				c.drawText("\"", 464, 370, paint);
-				c.drawText("'", 602, 370, paint);
-				c.drawText(";", 740, 370, paint);
-				c.drawText(":", 878, 370, paint);
-				c.drawText("{", 1016, 370, paint);
-				c.drawText("}", 1154, 370, paint);
+				c.drawText("|", 50/2, 370/2, paint);
+				c.drawText("\\", 188/2, 370/2, paint);
+				c.drawText("/", 326/2, 370/2, paint);
+				c.drawText("\"", 464/2, 370/2, paint);
+				c.drawText("'", 602/2, 370/2, paint);
+				c.drawText(";", 740/2, 370/2, paint);
+				c.drawText(":", 878/2, 370/2, paint);
+				c.drawText("{", 1016/2, 370/2, paint);
+				c.drawText("}", 1154/2, 370/2, paint);
 				
-				c.drawText("?", 50, 498, paint);
-				c.drawText(" ", 188, 498, paint);
-				c.drawText(" ", 326, 498, paint);
-				c.drawText(" ", 464, 498, paint);
-				c.drawText(" ", 602, 498, paint);
-				c.drawText(",", 740, 498, paint);
-				c.drawText(".", 878, 498, paint);
-				c.drawText("<", 1016, 498, paint);
-				c.drawText(">", 1154, 498, paint);
+				c.drawText("?", 50/2, 498/2, paint);
+				c.drawText(" ", 188/2, 498/2, paint);
+				c.drawText(" ", 326/2, 498/2, paint);
+				c.drawText(" ", 464/2, 498/2, paint);
+				c.drawText(" ", 602/2, 498/2, paint);
+				c.drawText(",", 740/2, 498/2, paint);
+				c.drawText(".", 878/2, 498/2, paint);
+				c.drawText("<", 1016/2, 498/2, paint);
+				c.drawText(">", 1154/2, 498/2, paint);
 			}
 		}
 		
 		private void keyboardSprites()
 		{
 			keys = new Keyboard();
-			keys.keys[0] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 30);
-			keys.keys[1] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 30);
-			keys.keys[2] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 30);
-			keys.keys[3] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 30);
-			keys.keys[4] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 30);
-			keys.keys[5] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 30);
-			keys.keys[6] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 30);
-			keys.keys[7] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 30);
-			keys.keys[8] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 30);
+			keys.keys[0] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40/2, 30/2);
+			keys.keys[1] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178/2, 30/2);
+			keys.keys[2] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316/2, 30/2);
+			keys.keys[3] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454/2, 30/2);
+			keys.keys[4] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592/2, 30/2);
+			keys.keys[5] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730/2, 30/2);
+			keys.keys[6] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868/2, 30/2);
+			keys.keys[7] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006/2, 30/2);
+			keys.keys[8] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144/2, 30/2);
 			
-			keys.keys[9] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 158);
-			keys.keys[10] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 158);
-			keys.keys[11] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 158);
-			keys.keys[12] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 158);
-			keys.keys[13] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 158);
-			keys.keys[14] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 158);
-			keys.keys[15] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 158);
-			keys.keys[16] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 158);
-			keys.keys[17] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 158);
+			keys.keys[9] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40/2, 158/2);
+			keys.keys[10] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178/2, 158/2);
+			keys.keys[11] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316/2, 158/2);
+			keys.keys[12] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454/2, 158/2);
+			keys.keys[13] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592/2, 158/2);
+			keys.keys[14] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730/2, 158/2);
+			keys.keys[15] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868/2, 158/2);
+			keys.keys[16] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006/2, 158/2);
+			keys.keys[17] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144/2, 158/2);
 			
-			keys.keys[18] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 286);
-			keys.keys[19] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 286);
-			keys.keys[20] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 286);
-			keys.keys[21] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 286);
-			keys.keys[22] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 286);
-			keys.keys[23] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 286);
-			keys.keys[24] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 286);
-			keys.keys[25] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 286);
-			keys.keys[26] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 286);
+			keys.keys[18] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40/2, 286/2);
+			keys.keys[19] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178/2, 286/2);
+			keys.keys[20] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316/2, 286/2);
+			keys.keys[21] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454/2, 286/2);
+			keys.keys[22] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592/2, 286/2);
+			keys.keys[23] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730/2, 286/2);
+			keys.keys[24] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868/2, 286/2);
+			keys.keys[25] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006/2, 286/2);
+			keys.keys[26] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144/2, 286/2);
 			
-			keys.keys[27] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40, 414);
-			keys.keys[28] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 414);
-			keys.keys[29] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316, 414);
-			keys.keys[30] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454, 414);
-			keys.keys[31] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592, 414);
-			keys.keys[32] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730, 414);
-			keys.keys[33] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868, 414);
-			keys.keys[34] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006, 414);
-			keys.keys[35] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144, 414);
+			keys.keys[27] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 40/2, 414/2);
+			keys.keys[28] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178/2, 414/2);
+			keys.keys[29] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 316/2, 414/2);
+			keys.keys[30] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 454/2, 414/2);
+			keys.keys[31] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 592/2, 414/2);
+			keys.keys[32] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 730/2, 414/2);
+			keys.keys[33] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 868/2, 414/2);
+			keys.keys[34] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1006/2, 414/2);
+			keys.keys[35] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1144/2, 414/2);
 			
 			//These final four keys are for special options.
 			//Key 36 switches from letters/numbers to symbols.
 			//Key 37 modifies capitalization.
 			//Key 38 is a backspace.
 			//Key 39 accepts the input.
-			keys.keys[36] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 42, 582);
-			keys.keys[37] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178, 582);
-			keys.keys[38] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 314, 582);
-			keys.keys[39] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1142, 582);
+			keys.keys[36] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 42/2, 582/2);
+			keys.keys[37] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 178/2, 582/2);
+			keys.keys[38] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 314/2, 582/2);
+			keys.keys[39] = new Sprite(this, BitmapFactory.decodeResource(getResources(), R.drawable.letterbox), 1142/2, 582/2);
 		}
 		
 	}
