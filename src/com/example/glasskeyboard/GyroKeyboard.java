@@ -180,7 +180,13 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
     	{if (textField.length() > 0)
     	{textField = textField.substring(0, textField.length()-1);}}
     	if (i == 39)
-    	{textField = "";}
+    	{
+    		//textField = "";
+    		Intent resultData = new Intent();
+    		resultData.putExtra("text-field", textField);
+    		setResult(Activity.RESULT_OK, resultData);
+    		finish();
+    	}
     	Toast.makeText(this, textField, Toast.LENGTH_SHORT).show();
 	}
 	
