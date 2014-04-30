@@ -4,6 +4,6 @@
     <string name="app_name">glassKeyboard</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="type_words">let\'s type.</string>
+    <string name="type_words">let\'s type</string>
 
 </resources>

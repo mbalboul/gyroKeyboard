@@ -1,8 +1,6 @@
 /*
 package com.example.glasskeyboard;
 
-//import most.firstapp.Sprite;
-
 import com.example.glasskeyboard.GyroKeyboard.OurView;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;

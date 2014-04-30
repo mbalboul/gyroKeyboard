@@ -1,8 +1,6 @@
 /*
 package com.example.glasskeyboard;
 
-//import most.firstapp.Sprite;
-
 import com.example.glasskeyboard.GyroKeyboard.OurView;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
@@ -180,8 +178,14 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
     	if (i == 38)
     	{if (textField.length() > 0)
     	{textField = textField.substring(0, textField.length()-1);}}
-    	//if (i == 39)
-    	//{whichDict = !whichDict;}
+    	if (i == 39)
+    	{
+    		//textField = "";
+    		Intent resultData = new Intent();
+    		resultData.putExtra("string", textField);
+    		setResult(Activity.RESULT_OK, resultData);
+    		finish();
+    	}
     	Toast.makeText(this, textField, Toast.LENGTH_SHORT).show();
 	}
 	

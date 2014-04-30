@@ -1,7 +1,5 @@
 package com.example.glasskeyboard;
 
-//import most.firstapp.Sprite;
-
 import com.example.glasskeyboard.GyroKeyboard.OurView;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
@@ -115,7 +113,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		keyParse(keys.checkOverlap(cursor));
     	return false;
 	}
-	
+/*	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) //This method, however, is for Glass.
 	{
@@ -127,7 +125,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		super.onKeyDown(keyCode, event);
 		return false;
 	}
-	
+*/	
     private GestureDetector createGestureDetector(Context context) {
         GestureDetector gestureDetector = new GestureDetector(context);
             //Create a base listener for generic gestures
