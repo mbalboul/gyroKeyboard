@@ -1,3 +1,4 @@
+/*
 package com.example.glasskeyboard;
 
 //import most.firstapp.Sprite;
@@ -517,3 +518,4 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 
 	
 }
+*/
