@@ -68,8 +68,12 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		if (mSensorManager.getDefaultSensor(gyroID) != null)
 		{gyroSensor = mSensorManager.getDefaultSensor(gyroID);}
+		
+		if (getIntent().getStringExtra("key") != null)
+		{textField = getIntent().getStringExtra("key");}
 	}
 	
+	@Override //TODO - this wasn't here before. Make sure nothing happens because of it.
 	protected void onPause() {
 		super.onPause();
 		mSensorManager.unregisterListener(this);
@@ -103,7 +107,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 	{
 		if (cursor != null)
 		{
-			cursor.velocity(event.values[1]*-150, event.values[0]*-150);
+			cursor.velocity(event.values[1]*-50, event.values[0]*-50);
 		}
 	}
 	
@@ -185,7 +189,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
     		setResult(Activity.RESULT_OK, resultData);
     		finish();
     	}
-    	Toast.makeText(this, textField, Toast.LENGTH_SHORT).show();
+    	//Toast.makeText(this, textField, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void writeDictionaries()
