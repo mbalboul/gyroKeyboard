@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,13 +21,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
 	private OurView v;
 	private GestureDetector mGestureDetector;
 	private String textField = "";
+	private Bitmap tutorial;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 		v = new OurView(this);
 		v.setOnTouchListener(this);
 		setContentView(v);
+		tutorial = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardtutorial);
 	}
 	
 	@Override
@@ -50,9 +52,9 @@ public class MainActivity extends Activity implements OnTouchListener {
 		v.resume();
 	}
 	
-	public void startApp(){
+	public void startApp(String s){
 		Intent i = new Intent(this,GyroKeyboard.class);  
-		i.putExtra("key", textField);
+		i.putExtra("key", s);
 		startActivityForResult(i, 37);
 	}
 
@@ -72,7 +74,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		startApp();
+		startApp(textField);
 		return false;
 	}
 	
@@ -83,7 +85,11 @@ public class MainActivity extends Activity implements OnTouchListener {
                 @Override
                 public boolean onGesture(Gesture gesture) {
                     if (gesture == Gesture.TAP) {
-                    	startApp();
+                    	startApp(textField);
+                        return true;
+                    }
+                    if (gesture == Gesture.TWO_TAP) {
+                    	startApp("");
                         return true;
                     }
                     return false;
@@ -115,12 +121,13 @@ public class MainActivity extends Activity implements OnTouchListener {
 				
 				Canvas c = holder.lockCanvas(); //lock, modify, unlock, display!
 				//TODO Draw the stupid introduction screen.
+				c.drawBitmap(tutorial, 0, 0, null);
 				Paint paint = new Paint();
 				paint.setColor(Color.WHITE);
 				paint.setTextSize(72);
 				Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
 				paint.setTypeface(robotoLight);
-				c.drawText(textField, 0, 359, paint);
+				c.drawText(textField, 1, 358, paint);
 				holder.unlockCanvasAndPost(c);
 			}
 		}
