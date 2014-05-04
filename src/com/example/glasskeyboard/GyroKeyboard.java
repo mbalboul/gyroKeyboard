@@ -59,6 +59,7 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		v = new OurView(this);
 		v.setOnTouchListener(this);
+		mGestureDetector = createGestureDetector(this);
 		int gyroID = Sensor.TYPE_GYROSCOPE;
 		//int accelID = Sensor.TYPE_LINEAR_ACCELERATION;
 		setContentView(v);
@@ -159,6 +160,15 @@ public class GyroKeyboard extends Activity implements OnTouchListener, SensorEve
             });
             return gestureDetector;
     }
+    
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        if (mGestureDetector != null) {
+            return mGestureDetector.onMotionEvent(event);
+        }
+        return false;
+    }
+
     
 	public void keyParse(int i)
 	{

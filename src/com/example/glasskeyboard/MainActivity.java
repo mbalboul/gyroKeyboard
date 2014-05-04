@@ -36,6 +36,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		v = new OurView(this);
 		v.setOnTouchListener(this);
+		mGestureDetector = createGestureDetector(this);
 		setContentView(v);
 		tutorial = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardtutorial);
 	}
@@ -88,7 +89,7 @@ public class MainActivity extends Activity implements OnTouchListener {
                     	startApp(textField);
                         return true;
                     }
-                    if (gesture == Gesture.TWO_TAP) {
+                    else if (gesture == Gesture.TWO_TAP) {
                     	startApp("");
                         return true;
                     }
@@ -96,6 +97,14 @@ public class MainActivity extends Activity implements OnTouchListener {
                 }
             });
             return gestureDetector;
+    }
+    
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        if (mGestureDetector != null) {
+            return mGestureDetector.onMotionEvent(event);
+        }
+        return false;
     }
     
     public class OurView extends SurfaceView implements Runnable {
